@@ -8,7 +8,7 @@ let port = 3000
 let server = express()
 server.use(bp.json())
 server.use('/', express.static(__dirname + '/../public'))
-server.use('/api/blogger', new BlogController().router)
+server.use('/api/blogs', new BlogController().router) //NOTE changed from blogger to blogs for test
 
 function defaultErrorHandler(req, res, next) {
   res.status(404).send("route not found")
