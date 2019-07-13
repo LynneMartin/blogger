@@ -19,15 +19,7 @@ export default class BlogController {
     } catch (error) { next(error) }
   }
 
-  async getAllBlogs(req, res, next) {
-    try {
-      let blog = await _blogService.find()
-      res.send(blog)
-    } catch (error) {
-      next(error)
-    }
-  }
-
+  
   async getBlogByTag(req, res, next) {
     try {
       if (!req.query.tags) {
@@ -40,7 +32,7 @@ export default class BlogController {
       res.send(blog)
     } catch (error) { next(error) }
   }
-
+  
   async getOneBlogById(req, res, next) {
     try {
       let blog = await _blogService.findById(req.params.blogId)
@@ -50,7 +42,16 @@ export default class BlogController {
       res.send(blog)
     } catch (error) { next(error) }
   }
-
+  
+  async getAllBlogs(req, res, next) {
+    try {
+      let blog = await _blogService.find()
+      res.send(blog)
+    } catch (error) {
+      next(error)
+    }
+  }
+  
   async createBlog(req, res, next) {
     try {
       let blog = await _blogService.create(req.body)
@@ -80,12 +81,12 @@ export default class BlogController {
       .get('', this.getBlogByTag)
       //NOTE Retrieve a blog by id:
       .get('/:blogId', this.getOneBlogById)
+      //NOTE Retrieve all blogs:
+      .get('', this.getAllBlogs)
       //NOTE Create a blog:
       .post('', this.createBlog)
       //NOTE Edit a blog by id:
       .put('/:blogId', this.editBlogById)
-      //NOTE Retrieve all blogs:
-      .get('', this.getAllBlogs)
       //NOTE Delete a blog by id:
       .delete('/:blogId', this.deleteBlogById)
 
